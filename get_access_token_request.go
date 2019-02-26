@@ -21,6 +21,14 @@ func NewGetAccessTokenRequest(appid string, secret string) *GetAccessTokenReques
 	return &GetAccessTokenRequest{appid, secret}
 }
 
+func (req GetAccessTokenRequest) GetResponse() Response {
+	return &GetAccessTokenResponse{}
+}
+
+func (res GetAccessTokenResponse) IsSuccess() bool {
+	return true
+}
+
 func (req GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
 
 	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
