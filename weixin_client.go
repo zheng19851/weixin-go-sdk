@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 type Client interface {
@@ -12,22 +14,38 @@ type Client interface {
 }
 
 type DefaultClient struct {
-	Api string
+	Server string
 }
 
-func NewDefaultClient() *DefaultClient {
-	return &DefaultClient{}
+func NewDefaultClient(server string) *DefaultClient {
+	return &DefaultClient{server}
 }
 
 func (c DefaultClient) Execute(req Request) Response {
 
-	response := req.GetResponse()
+	apiUrlPattern := c.Server + "/%s"
 
-	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
+	apiUrl := fmt.Sprintf(apiUrlPattern, req.ApiName())
 
-	apiUrl := fmt.Sprintf(apiUrlPattern, "wx41a8a8b76d194515", "bd6e5590cc1eeb6180d980628cf82b55")
+	fmt.Println("apiUrl:", apiUrl)
 
-	resp, err := http.Get(apiUrl)
+	httpArgs := url.Values{}
+
+	for k, v := range req.GetParams() {
+		httpArgs.Add(k, v)
+	}
+
+	httpReq, err := http.NewRequest(req.GetHttpMethod(), apiUrl, strings.NewReader(httpArgs.Encode()))
+	if err != nil {
+		// handle error
+		return nil
+	}
+
+	httpClient := &http.Client{}
+	resp, err := httpClient.Do(httpReq)
+	if err != nil {
+		// handle error
+	}
 
 	defer resp.Body.Close()
 
@@ -38,7 +56,7 @@ func (c DefaultClient) Execute(req Request) Response {
 
 	fmt.Println(string(body))
 
-	//getAccessTokenResponse := &GetAccessTokenResponse{"test", 0}
+	response := req.GetResponse()
 	json.Unmarshal(body, response)
 
 	return response
