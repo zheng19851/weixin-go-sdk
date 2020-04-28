@@ -1,5 +1,12 @@
 package main
 
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
 type GetAccessTokenRequest struct {
 	Appid  string
 	Secret string
@@ -35,26 +42,26 @@ func (res GetAccessTokenResponse) IsSuccess() bool {
 	return res.Access_token != ""
 }
 
-//func (req GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
-//
-//	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
-//
-//	apiUrl := fmt.Sprintf(apiUrlPattern, req.Appid, req.Secret)
-//
-//	resp, err := http.Get(apiUrl)
-//
-//	defer resp.Body.Close()
-//
-//	body, err := ioutil.ReadAll(resp.Body)
-//	if err != nil {
-//		// handle error
-//	}
-//
-//	fmt.Println(string(body))
-//
-//	getAccessTokenResponse := &GetAccessTokenResponse{"test", 0}
-//	json.Unmarshal(body, getAccessTokenResponse)
-//
-//	return getAccessTokenResponse
-//
-//}
+func (req GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
+
+	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
+
+	apiUrl := fmt.Sprintf(apiUrlPattern, req.Appid, req.Secret)
+
+	resp, err := http.Get(apiUrl)
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		// handle error
+	}
+
+	fmt.Println(string(body))
+
+	response := &GetAccessTokenResponse{}
+	json.Unmarshal(body, response)
+
+	return response
+
+}
