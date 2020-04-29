@@ -54,7 +54,7 @@ func (req *GetCallbackIpRequest) Execute() *GetCallbackIpResponse {
 		// handle error
 	}
 
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 
 	response := &GetCallbackIpResponse{}
 	json.Unmarshal(body, response)

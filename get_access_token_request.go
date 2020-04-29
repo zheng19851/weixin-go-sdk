@@ -57,7 +57,7 @@ func (req *GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
 		// handle error
 	}
 
-	fmt.Println(string(body))
+	//fmt.Println(string(body))
 
 	response := &GetAccessTokenResponse{}
 	json.Unmarshal(body, response)
