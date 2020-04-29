@@ -19,28 +19,27 @@ func NewGetCallbackIpRequest(accessToken string) *GetCallbackIpRequest {
 	return &GetCallbackIpRequest{accessToken}
 }
 
-func (req GetCallbackIpRequest) ApiName() string {
+func (req *GetCallbackIpRequest) ApiName() string {
 	return "getcallbackip"
 }
 
-func (req GetCallbackIpRequest) GetParams() map[string]string {
-
+func (req *GetCallbackIpRequest) GetParams() map[string]string {
 	return map[string]string{"access_token": req.AccessToken}
 }
 
-func (req GetCallbackIpRequest) GetHttpMethod() string {
+func (req *GetCallbackIpRequest) GetHttpMethod() string {
 	return "get"
 }
 
-func (req GetCallbackIpRequest) GetResponse() Response {
+func (req *GetCallbackIpRequest) GetResponse() Response {
 	return &GetCallbackIpResponse{}
 }
 
-func (res GetCallbackIpResponse) IsSuccess() bool {
+func (res *GetCallbackIpResponse) IsSuccess() bool {
 	return res.IpList != nil
 }
 
-func (req GetCallbackIpRequest) Execute() *GetCallbackIpResponse {
+func (req *GetCallbackIpRequest) Execute() *GetCallbackIpResponse {
 
 	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/getcallbackip?access_token=%s"
 

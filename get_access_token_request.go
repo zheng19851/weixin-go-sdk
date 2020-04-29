@@ -21,28 +21,28 @@ func NewGetAccessTokenRequest(appid string, secret string) *GetAccessTokenReques
 	return &GetAccessTokenRequest{appid, secret}
 }
 
-func (req GetAccessTokenRequest) ApiName() string {
+func (req *GetAccessTokenRequest) ApiName() string {
 	return "token"
 }
 
-func (req GetAccessTokenRequest) GetParams() map[string]string {
+func (req *GetAccessTokenRequest) GetParams() map[string]string {
 
 	return map[string]string{"grant_type": "client_credential", "appid": req.Appid, "secret": req.Secret}
 }
 
-func (req GetAccessTokenRequest) GetHttpMethod() string {
+func (req *GetAccessTokenRequest) GetHttpMethod() string {
 	return "get"
 }
 
-func (req GetAccessTokenRequest) GetResponse() Response {
+func (req *GetAccessTokenRequest) GetResponse() Response {
 	return &GetAccessTokenResponse{}
 }
 
-func (res GetAccessTokenResponse) IsSuccess() bool {
+func (res *GetAccessTokenResponse) IsSuccess() bool {
 	return res.Access_token != ""
 }
 
-func (req GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
+func (req *GetAccessTokenRequest) Execute() *GetAccessTokenResponse {
 
 	apiUrlPattern := "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s"
 

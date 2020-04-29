@@ -32,7 +32,6 @@ func testGetCallbackIpRequest2() {
 
 	token := "32_l72IYKSbAaBX1Go-bMnL_JInTxiBuJiIJYELx2q5FKBa0aMOGFNO556OgDcMtv5M8yVLMC0nhCGVvGCIGI88CauST29rzcG9HbFiJ2dvYyc95ZiUkOXYWbfbLAFi6ikia5sTeVcIJnRB0bnXLLXgAFACCO"
 	req := NewGetCallbackIpRequest(token)
-	//client := NewDefaultClient("https://api.weixin.qq.com/cgi-bin")
 	response := req.Execute()
 	fmt.Printf("ip list:%v", response.IpList)
 	fmt.Println(response.IsSuccess())
