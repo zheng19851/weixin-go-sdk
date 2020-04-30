@@ -14,8 +14,81 @@ func main() {
 	//testCreateMenuRequest()
 
 	//testGetMenuRequest()
-	testDeleteMenuRequest()
+	//testDeleteMenuRequest()
 
+	//testCreateTagRequest()
+	//testGetTagsRequest()
+	//testUpdateTagRequest()
+	//testDeleteTagRequest()
+
+	testGetTagFansRequest()
+
+}
+
+func testGetTagFansRequest() {
+	token := "32_BcYNq8KPUi5tyOPpY2eJtYiWZJCWDz9uXwHAeh-jwL0HvGYclWt29Dho908zB6O4twOS5YKPV4ZujKMoxXqbl4w9E0r0ANb1leeHfzuqhTyJUmI-lemdE7mDHR53uhwI-xup-0ilxGP9eK-pOZDeAFATEI"
+
+	req := NewGetTagFansRequest(token, 100, "")
+
+	response := req.Execute()
+
+	fmt.Println(response.IsSuccess())
+	fmt.Println(response.Errcode)
+	fmt.Println(response.Errmsg)
+	fmt.Println(response.TagFansData)
+}
+
+func testDeleteTagRequest() {
+	token := "32_BcYNq8KPUi5tyOPpY2eJtYiWZJCWDz9uXwHAeh-jwL0HvGYclWt29Dho908zB6O4twOS5YKPV4ZujKMoxXqbl4w9E0r0ANb1leeHfzuqhTyJUmI-lemdE7mDHR53uhwI-xup-0ilxGP9eK-pOZDeAFATEI"
+
+	req := NewDeleteTagRequest(token, 104)
+
+	response := req.Execute()
+
+	fmt.Println(response.IsSuccess())
+	fmt.Println(response.Errcode)
+	fmt.Println(response.Errmsg)
+}
+
+func testUpdateTagRequest() {
+	// 100
+	token := "32_BcYNq8KPUi5tyOPpY2eJtYiWZJCWDz9uXwHAeh-jwL0HvGYclWt29Dho908zB6O4twOS5YKPV4ZujKMoxXqbl4w9E0r0ANb1leeHfzuqhTyJUmI-lemdE7mDHR53uhwI-xup-0ilxGP9eK-pOZDeAFATEI"
+
+	req := NewUpdateTagRequest(token, 100, "test1122")
+
+	response := req.Execute()
+
+	fmt.Println(response.IsSuccess())
+	fmt.Println(response.Errcode)
+	fmt.Println(response.Errmsg)
+}
+
+func testGetTagsRequest() {
+	token := "32_BcYNq8KPUi5tyOPpY2eJtYiWZJCWDz9uXwHAeh-jwL0HvGYclWt29Dho908zB6O4twOS5YKPV4ZujKMoxXqbl4w9E0r0ANb1leeHfzuqhTyJUmI-lemdE7mDHR53uhwI-xup-0ilxGP9eK-pOZDeAFATEI"
+
+	req := NewGetTagsRequest(token)
+
+	response := req.Execute()
+
+	fmt.Println(response.IsSuccess())
+	fmt.Println(response.Errcode)
+	fmt.Println(response.Errmsg)
+	fmt.Println(len(response.Tags))
+
+	for e := range response.Tags {
+		fmt.Println(response.Tags[e])
+	}
+
+}
+
+func testCreateTagRequest() {
+	token := "32_looq8breXAKpt_YAtzeIAKMYkHY_VMGf2DEcgJYyjFthpklujNsCANHukp0HJ64tA0dloS7wQGy16tl3fIEATqM1h7-8zr0Ccli-HuUnX80eDYp7SXOq9km7cP4Eb7-WhdbJAcsfvZbyMSBfJDLeABATNV"
+
+	req := NewCreateTagRequest(token, "shanghai")
+
+	response := req.Execute()
+
+	fmt.Println(response.IsSuccess())
 }
 
 /*
@@ -51,9 +124,10 @@ func testGetMenuRequest() {
 */
 func testCreateMenuRequest() {
 
-	token := "32_uoKpK1fnJmVYNVYXOHDzgthJihH8FMj_e63QWl3LfoeVKcRAmLBCo5NuL-0WjPwE4A6IqLtPHOVnLLvNt3tyOqEnxGz4r6w5jUBaun3r1CnuR__VdZL5h9OmO-hdCsKfjm14X96HD77JqaryBLMcAIANXY"
+	token := "32_looq8breXAKpt_YAtzeIAKMYkHY_VMGf2DEcgJYyjFthpklujNsCANHukp0HJ64tA0dloS7wQGy16tl3fIEATqM1h7-8zr0Ccli-HuUnX80eDYp7SXOq9km7cP4Eb7-WhdbJAcsfvZbyMSBfJDLeABATNV"
 
-	menu1 := Button{"view", "test1", "http://www.baidu.com", "", []Button{}}
+	//menu1 := Button{"view", "test1", "http://www.baidu.com", "", []Button{}}
+	menu1 := Button{Menu_type: "view", Name: "test", Url: "http://www.baidu.com"}
 	buttons := []Button{menu1}
 
 	req := NewCreateMenuRequest(token, buttons)
